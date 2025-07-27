@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-//import { dbConnect } from "./config/db";
+import { dbConnect } from "./config/db";
+
 dotenv.config();
 
 const app: Express = express();
@@ -12,7 +13,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Backend is running");
 });
 
-//dbConnect();
+dbConnect();
 
 const PORT: number = parseInt(process.env.PORT as string, 10) || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
