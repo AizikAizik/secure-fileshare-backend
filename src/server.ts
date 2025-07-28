@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes";
+import fileRoutes from "./routes/fileRoutes";
 import { dbConnect } from "./config/db";
 
 dotenv.config();
@@ -11,6 +12,7 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/files", fileRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Backend is running");
