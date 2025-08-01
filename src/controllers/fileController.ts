@@ -160,3 +160,17 @@ export const shareFile = async (
     res.status(500).json({ error: "Sharing failed" });
   }
 };
+
+export const listFiles = async (
+  req: Request & { user?: { id: string } },
+  res: Response
+): Promise<void> => {
+  try {
+    const files = await File.find({
+      $or: [{ owner: req.user?.id }, { "shareList.userId": req.user?.id }],
+    }).select("-encryptedKey -shareList"); // Hide sensitive data
+    res.json(files);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to list files" });
+  }
+};
