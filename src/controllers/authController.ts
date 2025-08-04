@@ -10,14 +10,17 @@ const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   const {
+    name,
     email,
     password,
     publicKey,
-  }: { email: string; password: string; publicKey: string } = req.body;
+  }: { name: string; email: string; password: string; publicKey: string } =
+    req.body;
 
   try {
     const hashedPassword: string = await bcrypt.hash(password, 10);
     const user: IUser = new User({
+      name,
       email,
       password: hashedPassword,
       publicKey,

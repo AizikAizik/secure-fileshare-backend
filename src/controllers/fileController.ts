@@ -168,7 +168,9 @@ export const listFiles = async (
   try {
     const files = await File.find({
       $or: [{ owner: req.user?.id }, { "shareList.userId": req.user?.id }],
-    }).select("-encryptedKey -shareList"); // Hide sensitive data
+    })
+      .populate("owner", "name") // Populate owner with name field
+      .select("-encryptedKey -shareList"); // Hide sensitive data
     res.json(files);
   } catch (error) {
     res.status(500).json({ error: "Failed to list files" });
