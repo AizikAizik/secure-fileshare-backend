@@ -56,13 +56,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const getPublicKey = async (
-  req: Request,
+export const getMyPublicKey = async (
+  req: Request & { user?: { id: string } },
   res: Response
 ): Promise<void> => {
-  const { email } = req.query as { email: string };
   try {
-    const user = await User.findOne({ email }).select("publicKey");
+    const user = await User.findById(req.user?.id).select("publicKey");
     if (!user) {
       res.status(404).json({ error: "User not found" });
       return;
