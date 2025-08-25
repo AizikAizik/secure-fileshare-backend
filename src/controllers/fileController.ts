@@ -73,6 +73,7 @@ export const uploadFile = async (
       console.error("Error message:", error);
       res.status(500).json({ error: error.message });
     } else {
+      console.error("Unknown error during upload");
       res.status(500).json({ error: "Upload failed" });
     }
   }
