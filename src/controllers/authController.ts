@@ -88,3 +88,7 @@ export const getPublicKey = async (
     res.status(500).json({ error: "Failed to fetch public key" });
   }
 };
+
+export const getCsrfToken = (req: Request, res: Response): void => {
+  res.json({ csrfToken: req.csrfToken() });
+};
