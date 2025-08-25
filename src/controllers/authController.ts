@@ -71,3 +71,20 @@ export const getMyPublicKey = async (
     res.status(500).json({ error: "Failed to fetch public key" });
   }
 };
+
+export const getPublicKey = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { email } = req.query as { email: string };
+  try {
+    const user = await User.findOne({ email }).select("publicKey");
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+    res.json({ publicKey: user.publicKey });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch public key" });
+  }
+};

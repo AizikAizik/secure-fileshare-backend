@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import morgan from "morgan";
 import authRoutes from "./routes/authRoutes";
 import fileRoutes from "./routes/fileRoutes";
 import { dbConnect } from "./config/db";
@@ -8,6 +9,9 @@ import { dbConnect } from "./config/db";
 dotenv.config();
 
 const app: Express = express();
+
+// Add Morgan logger before other middlewares (use 'dev' for development)
+app.use(morgan("dev"));
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 

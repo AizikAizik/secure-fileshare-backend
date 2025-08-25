@@ -158,6 +158,7 @@ export const shareFile = async (
 
     res.json({ message: "File shared successfully" });
   } catch (error) {
+    console.error("Share error:", error);
     res.status(500).json({ error: "Sharing failed" });
   }
 };
