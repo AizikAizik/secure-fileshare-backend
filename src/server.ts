@@ -21,6 +21,16 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(
   helmet({
     frameguard: { action: "sameorigin" }, // Prevent clickjacking
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"], // Default: Only load from same origin
+        scriptSrc: ["'self'"], // Scripts only from your domain (add "'unsafe-inline'" if needed for React dev, but avoid in prod)
+        styleSrc: ["'self' 'unsafe-inline'"], // Allow inline styles (Tailwind uses them)
+        imgSrc: ["'self' data:"], // Images from same origin or data URIs (for blobs)
+        connectSrc: ["'self' http://localhost:5000"], // API connections (update for prod URL)
+        // Add more as needed (e.g., fontSrc for custom fonts)
+      },
+    },
   })
 );
 
